@@ -4,8 +4,9 @@ import NarBar from './components/navbar/NarBar.vue';
 </script>
 
 <template>
-  <NarBar />
-  <RouterView />
+  <NarBar>
+    <RouterView />
+  </NarBar>
 </template>
 
 <style scoped>
