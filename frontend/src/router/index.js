@@ -3,10 +3,10 @@ import CreateIndex from '@/views/create/CreateIndex.vue'
 import NotFound from '@/views/error/NotFound.vue'
 import FriendIndex from '@/views/friend/FriendIndex.vue'
 import HomepageIndex from '@/views/homepage/HomepageIndex.vue'
-import ProfileIndex from '@/views/profile/ProfileIndex.vue'
 import SpaceIndex from '@/views/space/SpaceIndex.vue'
 import LoginIndex from '@/views/user/account/LoginIndex.vue'
 import RegisterIndex from '@/views/user/account/RegisterIndex.vue'
+import ProfileIndex from '@/views/user/profile/ProfileIndex.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({

@@ -31,9 +31,8 @@ const user = useUserStore()
             </div>
         </div>
         <div class="navbar-end mr-7">
-            <RouterLink v-if="user.isLogin()" :to="{name: 'create-index'}" class="btn btn-ghost text-base mr-4 px-2.5">
+            <RouterLink v-if="user.isLogin()" :to="{name: 'create-index'}" class="btn btn-ghost text-base mr-4 px-2 create-btn">
               <CreateIcon />
-              Create
             </RouterLink>
             <RouterLink v-if="user.hasPulledUserInfo && !user.isLogin()" active-class="btn-active" :to="{name: 'user-account-login-index'}" class="btn btn-ghost text-lg">
               Account
@@ -69,5 +68,9 @@ const user = useUserStore()
 <style scoped>
 .options {
   margin-top: 4px;
+}
+
+.create-btn {
+  border: 0;
 }
 </style>
