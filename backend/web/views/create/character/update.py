@@ -42,6 +42,6 @@ class UpdateCharacterView(APIView):
                 'result': 'success'
             })
         except:
-            Response({
+            return Response({
                 'result': 'System error'
             })
