@@ -9,8 +9,8 @@
                 </label>
                 <div class="px-2 font-bold text-lg">AI Friends</div>
             </div>
-            <div class="navbar-center w-4/5 max-w-180">
-                <div class="join w-4/5">
+            <div class="navbar-center w-4/5 max-w-180 flex justify-center">
+                <div class="join w-4/5 flex justify-center">
                     <input class="input join-item w-4/5" placeholder="Ask now" />
                     <button class="btn join-item gap-0">
                         <SearchIcon />
