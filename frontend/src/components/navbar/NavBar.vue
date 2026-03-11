@@ -18,9 +18,15 @@
                     </button>
                 </div>
             </div>
-            <RouterLink :to="{name: 'user-account-login-index'}" class="navbar-end">
-                <button class="btn btn-ghost text-lg">Account</button>
-            </RouterLink>
+            <div class="navbar-end">
+                <RouterLink v-if="user.isLogin()" :to="{name: 'create-index'}" class="btn btn-ghost mr-5 px-2">
+                    <CreateIcon />
+                </RouterLink>
+                <RouterLink v-if="!user.isLogin()" :to="{name: 'user-account-login-index'}" class="mr-3 btn btn-ghost text-lg px-3">
+                    Account
+                </RouterLink>
+                <UserMenu v-else class="mr-3" />
+            </div>
         </nav>
         <div class="p-4">
             <slot></slot>
@@ -32,19 +38,19 @@
         <div class="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-16 is-drawer-open:w-54">
         <ul class="menu w-full grow">
             <li>
-                <RouterLink :to="{name: 'homepage-index'}" active-class="menu-focus" class="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2.5" data-tip="Homepage">
+                <RouterLink :to="{name: 'homepage-index'}" active-class="menu-focus" class="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2.5 mb-1.5" data-tip="Homepage">
                     <HomepageIcon />
                     <span class="is-drawer-close:hidden text-base ml-1 whitespace-nowrap">Homepage</span>
                 </RouterLink>
             </li>
             <li>
-                <RouterLink :to="{name: 'friend-index'}" active-class="menu-focus" class="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2.5" data-tip="Friend">
+                <RouterLink :to="{name: 'friend-index'}" active-class="menu-focus" class="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2.5 mb-1.5" data-tip="Friend">
                     <FriendIcon />
                     <span class="is-drawer-close:hidden text-base ml-1 whitespace-nowrap">Friend</span>
                 </RouterLink>
             </li>
             <li>
-                <RouterLink :to="{name: 'create-index'}" active-class="menu-focus" class="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2.5" data-tip="Create">
+                <RouterLink :to="{name: 'create-index'}" active-class="menu-focus" class="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2.5 mb-1.5" data-tip="Create">
                     <CreateIcon />
                     <span class="is-drawer-close:hidden text-base ml-1 whitespace-nowrap">Create</span>
                 </RouterLink>
@@ -56,12 +62,15 @@
 </template>
 
 <script setup>
+import { useUserStore } from '@/stores/user';
 import CreateIcon from '../icons/CreateIcon.vue';
 import FriendIcon from '../icons/FriendIcon.vue';
 import HomepageIcon from '../icons/HomepageIcon.vue';
 import MenuIcon from '../icons/MenuIcon.vue';
 import SearchIcon from '../icons/SearchIcon.vue';
+import UserMenu from '@/views/user/account/components/UserMenu.vue';
 
+const user = useUserStore()
 </script>
 
 <style scoped>
