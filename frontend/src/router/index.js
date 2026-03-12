@@ -1,4 +1,5 @@
 import { useUserStore } from '@/stores/user'
+import UpdateCharacter from '@/views/create/character/UpdateCharacter.vue'
 import CreateIndex from '@/views/create/CreateIndex.vue'
 import NotFoundIndex from '@/views/error/NotFoundIndex.vue'
 import FriendIndex from '@/views/friend/FriendIndex.vue'
@@ -35,6 +36,14 @@ const router = createRouter({
       meta: {
         needLogin: true
       }
+    },
+    {
+      path: '/create/character/update/:character_id/',
+      component: UpdateCharacter,
+      name: 'update-character',
+      meta: {
+        needLogin: true,
+      },
     },
     {
       path: '/404/',

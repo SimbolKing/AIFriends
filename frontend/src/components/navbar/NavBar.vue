@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="navbar-end">
-                <RouterLink v-if="user.isLogin()" :to="{name: 'create-index'}" class="btn btn-ghost mr-5 px-2">
+                <RouterLink v-if="user.isLogin()" :to="{name: 'update-character', params: {character_id: 1}}" class="btn btn-ghost mr-5 px-2">
                     <CreateIcon />
                 </RouterLink>
                 <RouterLink v-if="!user.isLogin() && user.hasPulledUserInfo" :to="{name: 'user-account-login-index'}" class="mr-3 btn btn-ghost text-lg px-3">
