@@ -13,7 +13,7 @@
                         <img :src="user.photo" alt="">
                     </div>
                 </div>
-                <span class="text-base font-bold ml-1.5 line-clamp-1">{{ user.username }}</span>
+                <span class="text-base font-bold ml-1.5 line-clamp-1 break-all">{{ user.username }}</span>
             </RouterLink>
         </li>
         <li></li>
