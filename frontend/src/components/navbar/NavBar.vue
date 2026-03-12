@@ -9,7 +9,7 @@
                 </label>
                 <div class="px-2 font-bold text-lg">AI Friends</div>
             </div>
-            <div class="navbar-center w-4/5 max-w-180 flex justify-center">
+            <div v-if="$route.name !== 'user-account-login-index' && $route.name !== 'user-account-register-index'" class="navbar-center w-4/5 max-w-180 flex justify-center">
                 <div class="join w-4/5 flex justify-center">
                     <input class="input join-item w-4/5" placeholder="Ask now" />
                     <button class="btn join-item gap-0">
@@ -22,10 +22,10 @@
                 <RouterLink v-if="user.isLogin()" :to="{name: 'create-index'}" class="btn btn-ghost mr-5 px-2">
                     <CreateIcon />
                 </RouterLink>
-                <RouterLink v-if="!user.isLogin()" :to="{name: 'user-account-login-index'}" class="mr-3 btn btn-ghost text-lg px-3">
+                <RouterLink v-if="!user.isLogin() && user.hasPulledUserInfo" :to="{name: 'user-account-login-index'}" class="mr-3 btn btn-ghost text-lg px-3">
                     Account
                 </RouterLink>
-                <UserMenu v-else class="mr-3" />
+                <UserMenu v-else-if="user.isLogin()" class="mr-3" />
             </div>
         </nav>
         <div class="p-4">

@@ -13,7 +13,7 @@
                         <img :src="user.photo" alt="">
                     </div>
                 </div>
-                <span class="text-base font-bold ml-2 line-clamp-1">{{ user.username }}</span>
+                <span class="text-base font-bold ml-1.5 line-clamp-1">{{ user.username }}</span>
             </RouterLink>
         </li>
         <li></li>
@@ -31,7 +31,7 @@
         </li>
         <li></li>
         <li>
-            <a @click="closeMenu" class="font-bold text-sm py-2.5">
+            <a @click="handleLogout" class="font-bold text-sm py-2.5">
                 <UserLogoutIcon />
                 Logout
             </a>
@@ -45,12 +45,28 @@ import UserLogoutIcon from '@/components/icons/UserLogoutIcon.vue';
 import UserProfileIcon from '@/components/icons/UserProfileIcon.vue';
 import UserSpaceIcon from '@/components/icons/UserSpaceIcon.vue';
 import { useUserStore } from '@/stores/user';
+import api from '@/utils/http/api';
+import { useRouter } from 'vue-router';
 
 const user = useUserStore()
+const router = useRouter()
 
 function closeMenu() {
     const element = document.activeElement
     if (element && element instanceof HTMLElement) element.blur()
+}
+
+async function handleLogout() {
+    try {
+        const res = await api.post('/api/user/account/logout/')
+        if (res.data.result === 'success') {
+            user.logout()
+            await router.push({name: 'user-account-login-index'})
+        }
+    } catch(err) {
+        console.log(err);
+        
+    }
 }
 </script>
 

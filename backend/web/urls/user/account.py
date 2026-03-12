@@ -1,6 +1,7 @@
 from django.urls import path
 
 from web.views.index import index
+from web.views.user.account.get_user_info import GetUserInfoView
 from web.views.user.account.login import LoginView
 from web.views.user.account.logout import LogoutView
 from web.views.user.account.refresh_token import RefreshTokenView
@@ -10,5 +11,6 @@ urlpatterns = [
     path('login/', LoginView.as_view()),
     path('register/', RegisterView.as_view()),
     path('logout/', LogoutView.as_view()),
-    path('refresh_token/', RefreshTokenView.as_view())
+    path('refresh_token/', RefreshTokenView.as_view()),
+    path('get_user_info/', GetUserInfoView.as_view())
 ]
