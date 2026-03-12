@@ -20,11 +20,11 @@ class UpdateCharacterView(APIView):
 
             if not name:
                 return Response({
-                    'result': "名字不能为空"
+                    'result': "character's name can not be empty"
                 })
             if not profile:
                 return Response({
-                    'result': '角色介绍不能为空'
+                    'result': "character's profile can not be empty"
                 })
             if photo:
                 remove_old_photo(character.photo)
@@ -40,6 +40,6 @@ class UpdateCharacterView(APIView):
                 'result': 'success',
             })
         except:
-            Response({
+            return Response({
                 'result': 'System error'
             })

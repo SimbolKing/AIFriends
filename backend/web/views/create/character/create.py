@@ -19,19 +19,19 @@ class CreateCharacterView(APIView):
 
             if not name:
                 return Response({
-                    'result': '名字不能为空'
+                    'result': "character's name can not be empty"
                 })
             if not profile:
                 return Response({
-                    'result': '角色介绍不能为空'
+                    'result': "character's profile can not be empty"
                 })
             if not photo:
                 return Response({
-                    'result': '头像不能为空'
+                    'result': "character's photo can not be empty"
                 })
             if not background_image:
                 return Response({
-                    'result': '聊天背景不能为空'
+                    'result': 'chat background can not be empty'
                 })
 
             Character.objects.create(
