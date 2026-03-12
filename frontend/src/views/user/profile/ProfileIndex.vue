@@ -25,8 +25,10 @@ import { useUserStore } from "@/stores/user.js";
 import { ref, useTemplateRef } from "vue";
 import { base64ToFile } from "@/utils/base_64_to_file";
 import api from "@/utils/http/api";
+import { useRouter } from "vue-router";
 
 const user = useUserStore()
+const router = useRouter()
 
 const photoRef = useTemplateRef('photo-ref')
 const usernameRef = useTemplateRef('username-ref')
@@ -50,18 +52,18 @@ async function handleUpdate() {
         formData.append('username', username)
         formData.append('profile', profile)
         if (photo !== user.photo) {
-        formData.append('photo', base64ToFile(photo, 'photo.png'))
+            formData.append('photo', base64ToFile(photo, 'photo.png'))
         }
         try {
-        const res = await api.post('/api/user/profile/update/', formData)
-        const data = res.data
+            const res = await api.post('/api/user/profile/update/', formData)
+            const data = res.data
         if (data.result === 'success') {
             user.setUserInfo(data)
+            router.push({name: 'user-space-index', params: {user_id: user.id}})
         } else {
             errorMessage.value = data.result
         }
         } catch (err) {
-        console.log(err)
         }
     }
 }

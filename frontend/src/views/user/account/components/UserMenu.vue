@@ -64,8 +64,6 @@ async function handleLogout() {
             await router.push({name: 'user-account-login-index'})
         }
     } catch(err) {
-        console.log(err);
-        
     }
 }
 </script>
