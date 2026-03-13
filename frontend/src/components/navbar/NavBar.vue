@@ -9,14 +9,13 @@
                 </label>
                 <div class="px-2 font-bold text-lg">AI Friends</div>
             </div>
-            <div v-if="$route.name !== 'user-account-login-index' && $route.name !== 'user-account-register-index'" class="navbar-center w-4/5 max-w-180 flex justify-center">
-                <div class="join w-4/5 flex justify-center">
-                    <input class="input join-item w-4/5" placeholder="Ask now" />
+            <div v-if="$route.name === 'homepage-index'" class="navbar-center w-4/5 max-w-180 flex justify-center">
+                <form @submit.prevent="handleSearch" class="join w-4/5 flex justify-center">
+                    <input v-model="searchQuery" class="input join-item w-4/5" placeholder="Ask now" />
                     <button class="btn join-item gap-0">
                         <SearchIcon />
-                        Search
                     </button>
-                </div>
+                </form>
             </div>
             <div class="navbar-end">
                 <RouterLink v-if="!user.isLogin() && user.hasPulledUserInfo" :to="{name: 'user-account-login-index'}" class="mr-3 btn btn-ghost text-lg px-3">
@@ -66,8 +65,27 @@ import HomepageIcon from '../icons/HomepageIcon.vue';
 import MenuIcon from '../icons/MenuIcon.vue';
 import SearchIcon from '../icons/SearchIcon.vue';
 import UserMenu from '@/views/user/account/components/UserMenu.vue';
+import { useRoute, useRouter } from 'vue-router';
+import { ref, watch } from 'vue';
 
 const user = useUserStore()
+
+const searchQuery = ref('')
+const router = useRouter()
+const route = useRoute()
+
+watch(() => route.query.q, newQ => {
+  searchQuery.value = newQ || ''
+})
+
+function handleSearch() {
+  router.push({
+    name: 'homepage-index',
+    query: {
+      q: searchQuery.value.trim(),
+    }
+  })
+}
 </script>
 
 <style scoped>

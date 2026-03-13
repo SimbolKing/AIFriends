@@ -2,7 +2,7 @@
     <div>
         <div class="avatar cursor-pointer" @mouseover="isHover=true" @mouseout="isHover=false">
             <div class="w-60 h-100 rounded-2xl relative">
-                <img :src="character.background_image" class="transition-transform duration-250" :class="{'scale-120': isHover}" alt="">
+                <img :src="character.background_image" class="transition-transform duration-250" :class="{'scale-110': isHover}" alt="">
                 <div class="absolute left-0 top-50 w-60 h-50 bg-linear-to-t from-black/40 to-transparent"></div>
 
                 <div v-if="canEdit && character.author.user_id === user.id" class="absolute right-0 top-50">
