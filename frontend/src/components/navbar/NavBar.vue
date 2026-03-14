@@ -40,9 +40,9 @@
                 </RouterLink>
             </li>
             <li>
-                <RouterLink :to="{name: 'friend-index'}" active-class="menu-focus" class="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2.5 mb-1.5" data-tip="Friend">
+                <RouterLink :to="{name: 'friend-index'}" active-class="menu-focus" class="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2.5 mb-1.5" data-tip="Chats">
                     <FriendIcon />
-                    <span class="is-drawer-close:hidden text-base ml-1 whitespace-nowrap">Friend</span>
+                    <span class="is-drawer-close:hidden text-base ml-1 whitespace-nowrap">Chats</span>
                 </RouterLink>
             </li>
             <li>

@@ -1,23 +1,29 @@
 <template>
     <div>
-        <div class="avatar cursor-pointer" @mouseover="isHover=true" @mouseout="isHover=false">
+        <div class="avatar cursor-pointer" @mouseover="isHover=true" @mouseout="isHover=false" @click="openChatField">
             <div class="w-60 h-100 rounded-2xl relative">
                 <img :src="character.background_image" class="transition-transform duration-250" :class="{'scale-110': isHover}" alt="">
                 <div class="absolute left-0 top-50 w-60 h-50 bg-linear-to-t from-black/40 to-transparent"></div>
 
                 <div v-if="canEdit && character.author.user_id === user.id" class="absolute right-0 top-50">
-                <RouterLink :to="{name: 'update-character', params: {character_id: character.id}}" class="btn btn-circle btn-ghost bg-transparent">
-                    <UpdateIcon />
-                </RouterLink>
-                <button @click="handleRemoveCharacter" class="btn btn-circle btn-ghost bg-transparent">
-                    <RemoveIcon />
-                </button>
+                    <RouterLink @click.stop :to="{name: 'update-character', params: {character_id: character.id}}" class="btn btn-circle btn-ghost bg-transparent">
+                        <UpdateIcon />
+                    </RouterLink>
+                    <button @click.stop="handleRemoveCharacter" class="btn btn-circle btn-ghost bg-transparent">
+                        <RemoveIcon />
+                    </button>
+                </div>
+
+                <div v-if="canRemoveFriend" class="absolute right-0 top-50">
+                    <button @click.stop="handleRemoveFriend" class="btn btn-circle btn-ghost bg-transparent">
+                        <RemoveIcon />
+                    </button>
                 </div>
 
                 <div class="absolute left-4 top-54 avatar">
-                <div class="w-14 rounded-full ring-3 ring-white">
-                    <img :src="character.photo" alt="">
-                </div>
+                    <div class="w-14 rounded-full ring-3 ring-white">
+                        <img :src="character.photo" alt="">
+                    </div>
                 </div>
                 <div class="absolute left-22 right-4 top-58 text-white font-bold line-clamp-1 break-all">
                     {{ character.name }}
@@ -28,27 +34,67 @@
             </div>
         </div>
         <RouterLink :to="{name: 'user-space-index', params: {user_id: character.author.user_id}}" class="flex items-center mt-4 gap-2 w-60">
-        <div class="avatar">
-            <div class="w-7 rounded-full">
-                <img :src="character.author.photo" alt="">
+            <div class="avatar">
+                <div class="w-7 rounded-full">
+                    <img :src="character.author.photo" alt="">
+                </div>
             </div>
-        </div>
-        <div class="text-sm line-clamp-1 break-all">{{ character.author.username }}</div>
+            <div class="text-sm line-clamp-1 break-all">{{ character.author.username }}</div>
         </RouterLink>
+        <ChatField ref="chat-field-ref" :friend="friend" />
     </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, useTemplateRef } from "vue";
 import { useUserStore } from "@/stores/user.js";
 import UpdateIcon from "@/components/icons/UpdateIcon.vue";
 import RemoveIcon from "@/components/icons/RemoveIcon.vue";
 import api from "@/utils/http/api";
+import { useRouter } from "vue-router";
+import ChatField from "../ChatField.vue";
 
-const props = defineProps(['character', 'canEdit'])
+const router = useRouter()
+const user = useUserStore()
+
+const props = defineProps(['character', 'canEdit', 'canRemoveFriend', 'friendId'])
 const emit = defineEmits(['remove'])
 const isHover = ref(false)
-const user = useUserStore()
+const chatFieldRef = useTemplateRef('chat-field-ref')
+const friend = ref(null)
+
+async function handleRemoveFriend() {
+  try {
+    const res = await api.post('/api/friend/remove/', {
+      friend_id: props.friendId,
+    })
+    if (res.data.result === 'success') {
+      emit('remove', props.friendId)
+    }
+  } catch (err) {
+  }
+}
+
+async function openChatField() {
+  if (!user.isLogin()) {
+        await router.push({
+            name: 'user-account-login-index'
+        })
+  } else {
+        try {
+            const res = await api.post('/api/friend/get_or_create/', {
+                character_id: props.character.id,
+            })
+            const data = res.data
+            if (data.result === 'success') {
+                friend.value = data.friend
+                chatFieldRef.value.showModal()
+            }
+        } catch (err) {
+            console.log(err)
+        }
+  }
+}
 
 async function handleRemoveCharacter() {
     try {
