@@ -18,7 +18,7 @@
 
 <script setup>
 import UserInfoField from "@/views/create/character/components/UserInfoField.vue";
-import { nextTick, onBeforeUnmount, onMounted, ref, useTemplateRef } from "vue";
+import { nextTick, onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from "vue";
 import { useRoute } from "vue-router";
 import api from "@/utils/http/api";
 import Character from "@/views/create/character/components/Character.vue";
@@ -29,6 +29,18 @@ const isLoading = ref(false)
 const hasCharacters = ref(true)
 const sentinelRef = useTemplateRef('sentinel-ref')
 const route = useRoute()
+
+function reset() {
+    userProfile.value = null
+    characters.value = []
+    isLoading.value = false
+    hasCharacters.value = true
+    loadMore()
+}
+
+watch(() => route.params.user_id, () => {
+    reset()
+})
 
 function removeCharacter(characterId) {
     characters.value = characters.value.filter(c => c.id !== characterId)
