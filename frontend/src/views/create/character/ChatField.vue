@@ -2,23 +2,62 @@
     <dialog ref="modal-ref" class="modal">
         <div class="modal-box w-110 h-170" :style="modalStyle">
             <button @click="modalRef.close()" class="btn btn-sm btn-circle btn-ghost bg-transparent absolute right-1 top-1">✕</button>
-                <InputField />
+                
+            <ChatHistory
+                ref="chat-history-ref"
+                v-if="friend"
+                :history="history"
+                :friendId="friend.id"
+                :character="friend.character"
+                @pushFrontMessage="handlePushFrontMessage"
+            />
+
+            <InputField
+                v-if="friend"
+                ref="input-ref"
+                :friendId="friend.id"
+                @pushBackMessage="handlePushBackMessage"
+                @addToLastMessage="handleAddToLastMessage"
+              />
             <CharacterPhotoField v-if="friend" :character="friend.character" />
         </div>
     </dialog>
 </template>
 
 <script setup>
-import {computed, useTemplateRef} from "vue";
+import { computed, nextTick, useTemplateRef, ref } from "vue";
 import InputField from "./components/chat_field/InputField.vue";
 import CharacterPhotoField from "./components/chat_field/CharacterPhotoField.vue";
+import ChatHistory from "./ChatHistory.vue";
 
 const props = defineProps(['friend'])
 const modalRef = useTemplateRef('modal-ref')
+const inputRef = useTemplateRef('input-ref')
+const chatHistoryRef = useTemplateRef('chat-history-ref')
 
-function showModal() {
-    modalRef.value.showModal()
+const history = ref([])
+
+function handlePushBackMessage(msg) {
+  history.value.push(msg)
+  chatHistoryRef.value.scrollToBottom()
 }
+
+function handleAddToLastMessage(delta) {
+  history.value.at(-1).content += delta
+  chatHistoryRef.value.scrollToBottom()
+}
+
+function handlePushFrontMessage(msg) {
+  history.value.unshift(msg)
+}
+
+async function showModal() {
+    modalRef.value.showModal()
+
+    await nextTick()
+    inputRef.value.focus()
+}
+
 
 const modalStyle = computed(() => {
     if (props.friend) {
@@ -32,6 +71,7 @@ const modalStyle = computed(() => {
         return {}
     }
 })
+
 
 defineExpose({ showModal })
 </script>
