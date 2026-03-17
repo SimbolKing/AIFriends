@@ -91,7 +91,6 @@ async function openChatField() {
                 chatFieldRef.value.showModal()
             }
         } catch (err) {
-            console.log(err)
         }
   }
 }
