@@ -1,6 +1,6 @@
 <template>
     <dialog ref="modal-ref" class="modal">
-        <div class="modal-box w-110 h-170" :style="modalStyle">
+        <div class="modal-box w-110 h-150" :style="modalStyle">
             <button @click="modalRef.close()" class="btn btn-sm btn-circle btn-ghost bg-transparent absolute right-1 top-1">✕</button>
                 
             <ChatHistory
