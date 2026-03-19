@@ -1,7 +1,7 @@
 <template>
-    <dialog ref="modal-ref" class="modal">
+    <dialog ref="modal-ref" class="modal" @close="handleClose">
         <div class="modal-box w-110 h-150" :style="modalStyle">
-            <button @click="handleClose" class="btn btn-sm btn-circle btn-ghost bg-transparent absolute right-1 top-1">✕</button>
+            <button @click="modalRef.close()" class="btn btn-sm btn-circle btn-ghost bg-transparent absolute right-1 top-1">✕</button>
                 
             <ChatHistory
                 ref="chat-history-ref"
@@ -59,7 +59,6 @@ async function showModal() {
 }
 
 function handleClose() {
-  modalRef.value.close()
   inputRef.value.close()
 }
 
