@@ -1,4 +1,4 @@
-const platform = 'vue'
+const platform = 'django'
 
 const CONFIG_API = {
     HTTP_URL: '',
